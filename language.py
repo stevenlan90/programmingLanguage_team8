@@ -28,7 +28,7 @@ def calculate_coronavirus_number_display():
 
 window = tk.Tk()
 window.title('Coronavirus App')
-window.geometry('800x600')
+window.geometry('400x200')
 window.configure(background='white')
 
 
