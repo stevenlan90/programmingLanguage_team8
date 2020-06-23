@@ -24,7 +24,41 @@ def calculate_coronavirus_number_display():
     plt.ylabel('case')
     plt.show()
 
+def calculate_coronavirus_daily_number_display():
+    countryCode = str(country_entry.get())
+    URL = "https://api.thevirustracker.com/free-api?countryTimeline="
 
+    res = requests.get(URL + countryCode)
+    arr = res.json()
+    items = arr['timelineitems'][0]
+    dates = list(items.keys())
+    dates.remove(dates[-1])
+    caseCount = [(items[key]['new_daily_cases']) for key in items if key != 'stat']
+
+    x = dates
+    y = caseCount
+    plt.plot(x, y)
+    plt.xlabel('date')
+    plt.ylabel('case')
+    plt.show()
+
+def calculate_coronavirus_death_number_display():
+    countryCode = str(country_entry.get())
+    URL = "https://api.thevirustracker.com/free-api?countryTimeline="
+
+    res = requests.get(URL + countryCode)
+    arr = res.json()
+    items = arr['timelineitems'][0]
+    dates = list(items.keys())
+    dates.remove(dates[-1])
+    caseCount = [(items[key]['total_deaths']) for key in items if key != 'stat']
+
+    x = dates
+    y = caseCount
+    plt.plot(x, y)
+    plt.xlabel('date')
+    plt.ylabel('case')
+    plt.show()
 
 window = tk.Tk()
 window.title('Coronavirus App')
@@ -47,5 +81,11 @@ result_label.pack()
 
 calculate_btn = tk.Button(window, text='好手氣', command=calculate_coronavirus_number_display)
 calculate_btn.pack()
+
+calculatedaily_btn = tk.Button(window, text='好運氣', command=calculate_coronavirus_daily_number_display)
+calculatedaily_btn.pack()
+
+calculatedeath_btn = tk.Button(window, text='殘念', command=calculate_coronavirus_death_number_display)
+calculatedeath_btn.pack()
 
 window.mainloop()
